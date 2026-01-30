@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <title>Clappr Live Stream</title>
+    <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/@clappr/player@latest/dist/clappr.min.js"></script>
+    <style>
+        body { background-color: #000; margin: 0; color: white; font-family: sans-serif; }
+        #player-wrapper { display: none; }
+        #ad-overlay {
+            position: fixed; top: 0; left: 0; width: 100%; height: 100%;
+            background: rgba(0,0,0,0.95); z-index: 9999;
+            display: flex; flex-direction: column; justify-content: center; align-items: center;
+        }
+        .ad-btn {
+            background: #ff0000; color: white; padding: 15px 40px;
+            border: none; border-radius: 5px; cursor: pointer; font-size: 20px; font-weight: bold;
+        }
+        #blocker-msg { display: none; color: #ffcc00; margin-top: 20px; text-align: center; padding: 10px; }
+    </style>
+</head>
+<body>
+
+    <div id="ad-overlay">
+        <h2>Click Below to Start Streaming</h2>
+        <button class="ad-btn" onclick="handleAdClick()">WATCH LIVE NOW</button>
+        <div id="blocker-msg">
+            <b>Ad-Blocker Detected!</b><br>
+            Please disable your Ad-blocker and Refresh the page to play this channel.
+        </div>
+    </div>
+
+    <div id="player-wrapper">
+        <div id="player"></div>
+    </div>
+
+    <script>
+        // ඔබ ලබාදුන් සියලුම ඇඩ් ලින්ක්ස් (පරණ සහ අලුත් සියල්ල මෙහි ඇත)
+        var adLinks = [
+            "https://www.effectivegatecpm.com/egf7t1zp51?key=34fa75486a98f09945c34ac7e2d6d21f",
+            "https://www.effectivegatecpm.com/mc1ik70d1?key=b581f0aa7fcc6efe7980fb239818dbba",
+            "https://www.effectivegatecpm.com/catp6hxc?key=cdc419bda1c1eb2b33e06fc7cd1ffd74",
+            "https://www.effectivegatecpm.com/gzdt4huw9e?key=dfc124f9ac3df1aacb231383657ec1cc",
+            "https://www.effectivegatecpm.com/dg3qvhzd?key=fff4b6a1bac1515ce8745b83683308fd",
+            "https://www.effectivegatecpm.com/t40jhrr1?key=168980665e7db830990b3c3434f5e89b",
+            "https://www.effectivegatecpm.com/mkbkd77bfp?key=f035b27138acccfc0be229ea6064c76d",
+            "https://www.effectivegatecpm.com/kvm5pv6a7?key=9f0f715ecadc24fdea7d121d3560af5b",
+            "https://www.effectivegatecpm.com/dy460dcy5?key=d954a6f07127713cbbf86b07bb348ed0"
+        ];
+
+        function handleAdClick() {
+            // අහඹු ලෙස එක ඇඩ් ලින්ක් එකක් තෝරා ගැනීම
+            var selectedAd = adLinks[Math.floor(Math.random() * adLinks.length)];
+            var win = window.open(selectedAd, '_blank');
+            
+            // Ad-blocker එකක් තිබේදැයි පරීක්ෂා කිරීම
+            if(!win || win.closed || typeof win.closed == 'undefined') {
+                document.getElementById('blocker-msg').style.display = 'block';
+            } else {
+                // ඇඩ් එක හරියට විවෘත වුනා නම් ප්ලේයර් එක පෙන්වීම
+                document.getElementById('ad-overlay').style.display = 'none';
+                document.getElementById('player-wrapper').style.display = 'block';
+                startClappr();
+            }
+        }
+
+        function startClappr() {
+            var player = new Clappr.Player({
+                source: "https://dai.google.com/ssai/event/X9tnEM9wQHKUIX6nWcZ4TA/master.m3u8",
+                parentId: "#player",
+                width: '100%',
+                height: '100vh',
+                autoPlay: true,
+                mute: false,
+                preload: 'auto',
+                mediacontrol: {seekbar: "#ff0000", buttons: "#ff0000"}
+            });
+        }
+    </script>
+    
+</body>
+</html>
