@@ -4,8 +4,6 @@
     <meta charset="utf-8">
     <title>Clappr Live Stream</title>
     <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/@clappr/player@latest/dist/clappr.min.js"></script>
-    <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/hls.js@latest/dist/hls.min.js"></script>
-    
     <style>
         body { background-color: #000; margin: 0; color: white; font-family: sans-serif; }
         #player-wrapper { display: none; }
@@ -37,6 +35,7 @@
     </div>
 
     <script>
+        // ඔබ ලබාදුන් සියලුම ඇඩ් ලින්ක්ස් (පරණ සහ අලුත් සියල්ල මෙහි ඇත)
         var adLinks = [
             "https://www.effectivegatecpm.com/egf7t1zp51?key=34fa75486a98f09945c34ac7e2d6d21f",
             "https://www.effectivegatecpm.com/mc1ik70d1?key=b581f0aa7fcc6efe7980fb239818dbba",
@@ -50,12 +49,15 @@
         ];
 
         function handleAdClick() {
+            // අහඹු ලෙස එක ඇඩ් ලින්ක් එකක් තෝරා ගැනීම
             var selectedAd = adLinks[Math.floor(Math.random() * adLinks.length)];
             var win = window.open(selectedAd, '_blank');
             
+            // Ad-blocker එකක් තිබේදැයි පරීක්ෂා කිරීම
             if(!win || win.closed || typeof win.closed == 'undefined') {
                 document.getElementById('blocker-msg').style.display = 'block';
             } else {
+                // ඇඩ් එක හරියට විවෘත වුනා නම් ප්ලේයර් එක පෙන්වීම
                 document.getElementById('ad-overlay').style.display = 'none';
                 document.getElementById('player-wrapper').style.display = 'block';
                 startClappr();
@@ -67,17 +69,11 @@
                 source: "https://dai.google.com/ssai/event/X9tnEM9wQHKUIX6nWcZ4TA/master.m3u8",
                 parentId: "#player",
                 width: '100%',
-                height: '90vh', // ප්ලේයර් එකේ උස ප්‍රමාණය
+                height: '100vh',
                 autoPlay: true,
                 mute: false,
-                // HLS වීඩියෝ ප්ලේ වීමට අවශ්‍ය Engine එක
-                plugins: [window.HlsjsPlayback],
-                playback: {
-                    hlsjsConfig: {
-                        // ප්ලේ නොවීමේ ගැටළු මගහරවා ගැනීමට
-                        enableWorker: true
-                    }
-                }
+                preload: 'auto',
+                mediacontrol: {seekbar: "#ff0000", buttons: "#ff0000"}
             });
         }
     </script>
